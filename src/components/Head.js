@@ -4,9 +4,11 @@ import { toggleMenu } from "../utils/appSlice";
 import { Link } from "react-router-dom";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
+import { useNavigate } from "react-router-dom";
 
 const Head = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -28,7 +30,7 @@ const Head = () => {
   }, [searchQuery]);
 
   const getSearchSuggestions = async () => {
-    console.log("API call - ", searchQuery);
+    //console.log("API call - ", searchQuery);
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
     setSuggestions(json[1]);
@@ -75,7 +77,16 @@ const Head = () => {
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setShowSuggestions(false)}
             />
-            <button className="p-1 w-16 border border-gray-300 bg-slate-100 rounded-r-full flex justify-center cursor-pointer hover:bg-slate-200 active:bg-slate-300">
+            <button
+              className="p-1 w-16 border border-gray-300 bg-slate-100 rounded-r-full flex justify-center cursor-pointer hover:bg-slate-200 active:bg-slate-300"
+              onClick={() => {
+                if (searchQuery.trim()) {
+                  navigate(
+                    `/results?search_query=${encodeURIComponent(searchQuery)}`
+                  );
+                }
+              }}
+            >
               <img
                 className="w-6"
                 src="https://www.svgrepo.com/show/7109/search.svg"

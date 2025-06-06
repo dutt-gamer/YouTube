@@ -9,7 +9,10 @@ import Body from "./components/Body";
 import Head from "./components/Head";
 import store from "./utils/store";
 import MainContainer from "./components/MainContainer";
+import VideoContainer from "./components/VideoContainer";
 import WatchPage from "./components/WatchPage";
+import Demo from "./components/Demo";
+import Demo2 from "./components/Demo2";
 //import { useState } from "react";
 
 const appRouter = createBrowserRouter([
@@ -29,6 +32,19 @@ const appRouter = createBrowserRouter([
       {
         path: "/watch",
         element: <WatchPage />,
+      },
+      {
+        path: "/results",
+        element: <VideoContainer />,
+      },
+      {
+        path: "/demo",
+        element: (
+          <>
+            <Demo />
+            <Demo2 />
+          </>
+        ),
       },
     ],
   },
